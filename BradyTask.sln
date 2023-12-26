@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BradyTask", "BradyTask\BradyTask.csproj", "{9746DE86-7FA1-480F-AB2E-220BB9A3F5A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9746DE86-7FA1-480F-AB2E-220BB9A3F5A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9746DE86-7FA1-480F-AB2E-220BB9A3F5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9746DE86-7FA1-480F-AB2E-220BB9A3F5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9746DE86-7FA1-480F-AB2E-220BB9A3F5A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1752239-E58A-4DF4-9092-A384AE0A5877}
+	EndGlobalSection
+EndGlobal
