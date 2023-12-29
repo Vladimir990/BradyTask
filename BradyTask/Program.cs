@@ -1,81 +1,36 @@
-﻿using BradyTask;
+﻿using BradyTask.BusinessLogic;
+using BradyTask.BusinessLogic.Contracts;
+using BradyTask.BusinessLogic.Models.Helpers;
+using BradyTask.BusinessLogic.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
+namespace BradyTask;
 class Program
 {
-    public static IConfiguration configuration = new ConfigurationBuilder()
-          .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-          .Build();
-
-    public static string inputFolderPath = configuration["Paths:InputFolderPath"];
-    public static string outputFolderPath = configuration["Paths:OutputFolderPath"];
-    public static string referenceDataFilePath = configuration["Paths:ReferenceDataPath"];
-    public static string inputFilePath;
-
-    static void Main()
+    static void Main(string[] args)
     {
-        Console.WriteLine($"Cheking if files already exist at location: {inputFolderPath}");
-        Console.WriteLine();
-        CheckExistingFiles(inputFolderPath);
+        var builder = new ConfigurationBuilder();
+        var config = BuildConfig(builder);
 
-        using (var watcher = new FileSystemWatcher(inputFolderPath))
+        var host = Host.CreateDefaultBuilder(args)
+        .ConfigureServices((_, services) =>
         {
-            // Subscribe to events
-            watcher.Created += OnFileCreated;
+            services.AddScoped<IFileProcessingService, FileProcessingService>();
+            services.AddScoped<IFilesCheckerService, FilesCheckerService>();
+            services.Configure<PathConfiguration>(config.GetSection("PathConfiguration"));
+        }).Build();
 
-            // Start watching the folder
-            watcher.EnableRaisingEvents = true;
-
-            Console.WriteLine("Press 'q' to quit the application.");
-            while (Console.Read() != 'q') ;
-        }
+        var svc = ActivatorUtilities.CreateInstance<FileProcessingService>(host.Services);
+        svc.Process();
     }
 
-    private static void CheckExistingFiles(string folderPath)
+    static IConfiguration BuildConfig(IConfigurationBuilder builder)
     {
-        // Get all files in the folder
-        string[] files = Directory.GetFiles(folderPath);
-
-        // Process existing files
-        foreach (string existingFile in files)
-        {
-            Console.WriteLine($"Existing file detected: {Path.GetFileName(existingFile)}");
-            inputFilePath = existingFile;
-            ProcessFile(inputFilePath);
-        }
-    }
-
-    private static void OnFileCreated(object sender, FileSystemEventArgs e)
-    {
-        // Handle the newly created file
-        inputFilePath = e.FullPath;
-        Console.WriteLine($"New file detected: {inputFilePath}");
-
-        // Process the new file
-        ProcessFile(inputFilePath);
-    }
-
-    private static void ProcessFile(string filePath)
-    {
-        try
-        {
-            Console.WriteLine($"Processing file: {Path.GetFileName(filePath)}");
-
-            // Deserialize ReferenceData into C# object
-            var referenceData = XmlHandling.DeserializeReferenceData(referenceDataFilePath);
-
-            // Deserialize Input into C# object
-            var generationReport = XmlHandling.DeserializeInput(filePath);
-
-            Console.WriteLine($"File: {Path.GetFileName(filePath)} successfully deserialized");
-            Console.WriteLine("Calculation started");
-            var output = Calculations.Calculate(generationReport, referenceData);
-            Console.WriteLine("Output successfully created");
-            FileHelper.GenerateOutputXml(output, inputFilePath, outputFolderPath);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error processing file: {ex.Message}");
-        }
+        return builder.SetBasePath(Directory.GetCurrentDirectory() + "\\Configurations")
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+            .AddEnvironmentVariables().Build();
     }
 }
