@@ -1,15 +1,10 @@
-﻿using System.Xml.Serialization;
+﻿using BradyTask.BusinessLogic.Models.Inputs;
+using System.Xml.Serialization;
 
 namespace BradyTask.BusinessLogic.Models.Input
 {
-    public class CoalGenerator
+    public class CoalGenerator : BaseGenerator
     {
-        [XmlElement("Name")]
-        public string Name { get; set; }
-
-        [XmlElement("Generation")]
-        public Generation Generation { get; set; }
-
         [XmlElement("TotalHeatInput")]
         public double TotalHeatInput { get; set; }
 

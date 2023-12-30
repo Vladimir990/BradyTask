@@ -1,15 +1,10 @@
-﻿using System.Xml.Serialization;
+﻿using BradyTask.BusinessLogic.Models.Inputs;
+using System.Xml.Serialization;
 
 namespace BradyTask.BusinessLogic.Models.Input
 {
-    public class WindGenerator
+    public class WindGenerator : BaseGenerator
     {
-        [XmlElement("Name")]
-        public string Name { get; set; }
-
-        [XmlElement("Generation")]
-        public Generation Generation { get; set; }
-
         [XmlElement("Location")]
         public string Location { get; set; }
     }

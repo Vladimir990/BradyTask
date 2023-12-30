@@ -17,11 +17,11 @@ namespace BradyTask.BusinessLogic.Helpers
             }
         }
 
-        public static ReferenceData DeserializeReferenceData(string filePath)
+        public static ReferenceData DeserializeReferenceData(string filePath, string fileName)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(ReferenceData));
 
-            using (FileStream stream = new FileStream(filePath, FileMode.Open))
+            using (FileStream stream = new FileStream(filePath + fileName, FileMode.Open))
             {
                 return (ReferenceData)serializer.Deserialize(stream);
             }

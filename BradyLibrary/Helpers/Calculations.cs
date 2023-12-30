@@ -11,12 +11,6 @@ namespace BradyTask.BusinessLogic.Helpers
         public static GenerationOutput Calculate(GenerationReport generationReport, ReferenceData referenceData)
         {
             GenerationOutput output = new GenerationOutput();
-            output.Totals = new Totals();
-            output.Totals.Generators = new List<Generator>();
-            output.MaxEmissionGenerators = new MaxEmissionGenerators();
-            output.MaxEmissionGenerators.Days = new List<BradyTask.BusinessLogic.Models.Outputs.Day>();
-            output.ActualHeatRates = new ActualHeatRates();
-            output.ActualHeatRates.ActualHeatRateList = new List<ActualHeatRate>();
             List<DailyEmission> dailyEmission = new List<DailyEmission>();
 
             // Calculations for Total Generation Value, Daily Emissions, and Actual Heat Rate

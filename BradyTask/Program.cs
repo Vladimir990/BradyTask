@@ -1,7 +1,6 @@
 ﻿using BradyTask.BusinessLogic;
 using BradyTask.BusinessLogic.Contracts;
 using BradyTask.BusinessLogic.Models.Helpers;
-using BradyTask.BusinessLogic.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,7 +17,6 @@ class Program
         .ConfigureServices((_, services) =>
         {
             services.AddScoped<IFileProcessingService, FileProcessingService>();
-            services.AddScoped<IFilesCheckerService, FilesCheckerService>();
             services.Configure<PathConfiguration>(config.GetSection("PathConfiguration"));
         }).Build();
 

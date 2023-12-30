@@ -5,6 +5,6 @@ namespace BradyTask.BusinessLogic.Models.Outputs
     public class MaxEmissionGenerators
     {
         [XmlElement("Day")]
-        public List<Day> Days { get; set; }
+        public List<Day> Days { get; set; } = new List<Day>();
     }
 }

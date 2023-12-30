@@ -5,6 +5,6 @@ namespace BradyTask.BusinessLogic.Models.Outputs
     public class ActualHeatRates
     {
         [XmlElement("ActualHeatRate")]
-        public List<ActualHeatRate> ActualHeatRateList { get; set; }
+        public List<ActualHeatRate> ActualHeatRateList { get; set; } = new List<ActualHeatRate>();
     }
 }

@@ -1,15 +1,10 @@
-﻿using System.Xml.Serialization;
+﻿using BradyTask.BusinessLogic.Models.Inputs;
+using System.Xml.Serialization;
 
 namespace BradyTask.BusinessLogic.Models.Input
 {
-    public class GasGenerator
+    public class GasGenerator : BaseGenerator
     {
-        [XmlElement("Name")]
-        public string Name { get; set; }
-
-        [XmlElement("Generation")]
-        public Generation Generation { get; set; }
-
         [XmlElement("EmissionsRating")]
         public double EmissionsRating { get; set; }
     }
